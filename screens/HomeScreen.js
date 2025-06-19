@@ -47,8 +47,8 @@ export default function HomeScreen({ navigation }) {
       onPress={() =>
         navigation.navigate('Image Viewer', {
           image: item.uri,
-          allPhotos,         // teljes képlista
-          startIndex: index, // ez a jelenlegi kép indexe a listában
+          allPhotos,
+          startIndex: index,
         })
       }
       key={item.id}
@@ -65,7 +65,9 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={globalStyles.simpleBackground}>
-      <Text style={globalStyles.pageTitle}>Gallery</Text>
+      <View style={globalStyles.titleCon}>
+        <Text style={globalStyles.pageTitle}>Gallery</Text>
+      </View>
       <FlatList
         data={allPhotos}
         keyExtractor={(item) => item.id}

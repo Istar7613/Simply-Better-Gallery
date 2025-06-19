@@ -70,7 +70,9 @@ export default function DirectoryView({ navigation }) {
 
   return (
     <View style={globalStyles.simpleBackground}>
-      <Text style={globalStyles.pageTitle}>Albums</Text>
+      <View style={globalStyles.titleCon}>
+        <Text style={globalStyles.pageTitle}>Albums</Text>
+      </View>
       <FlatList
         data={albums}
         keyExtractor={item => item.id}

@@ -4,15 +4,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Screenek importja
 import HomeScreen from './screens/HomeScreen';
 import DirectoryView from './screens/DirectoryView';
 import AlbumScreen from './screens/AlbumScreen';
 import ImageViewerScreen from './screens/ImageViewerScreen';
+import Options from './screens/Options';
 
-// Navigátorok
-const Tab = createMaterialTopTabNavigator();
+const MainTab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
+const GalleryTab = createMaterialTopTabNavigator();
 
 function shouldSwipe(route, navigation) {
   const state = navigation.getState();
@@ -24,20 +24,35 @@ function shouldSwipe(route, navigation) {
     if (galleryTabRoute?.state?.routes) {
       const lastScreen = galleryTabRoute.state.routes[galleryTabRoute.state.routes.length - 1];
       if (lastScreen.name === 'Image Viewer') {
-        return false; // TILTSUK a swipe-ot, ha a viewer aktív!
+        return false;
       }
     }
   }
   return true;
 }
 
-// Gallery stack (fő galéria, viewer)
+function GalleryWithOptionsTab() {
+  return (
+    <GalleryTab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        swipeEnabled: true,
+        tabBarShowLabel: false,
+        tabBarStyle: { display: 'none' },
+      }}
+    >
+      <GalleryTab.Screen name="Options" component={Options} />
+      <GalleryTab.Screen name="Home" component={HomeScreen} />
+    </GalleryTab.Navigator>
+  );
+}
+
 function GalleryStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Gallery"
-        component={HomeScreen}
+        name="GalleryWithOptions"
+        component={GalleryWithOptionsTab}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -49,7 +64,6 @@ function GalleryStack() {
   );
 }
 
-// Directory stack (albumlista, album tartalma)
 function DirectoryStack() {
   return (
     <Stack.Navigator>
@@ -76,7 +90,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'black' }}>
       <NavigationContainer>
-        <Tab.Navigator
+        <MainTab.Navigator
           initialRouteName="GalleryTab"
           screenOptions={({ route, navigation }) => ({
             swipeEnabled: shouldSwipe(route, navigation),
@@ -84,17 +98,17 @@ export default function App() {
             tabBarStyle: { display: 'none' },
           })}
         >
-          <Tab.Screen
+          <MainTab.Screen
             name="GalleryTab"
             component={GalleryStack}
             options={{ tabBarLabel: 'Gallery' }}
           />
-          <Tab.Screen
+          <MainTab.Screen
             name="DirectoriesTab"
             component={DirectoryStack}
             options={{ tabBarLabel: 'Directories' }}
           />
-        </Tab.Navigator>
+        </MainTab.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

@@ -4,8 +4,7 @@ const IMAGE_SIZE = (Dimensions.get('window').width / 2 - 24) / 2;
 const wwidth = Dimensions.get('window').width
 const wheight = Dimensions.get('window').height
 
-
-
+//Felt cute, might rewrite later :3
 export default StyleSheet.create({
     simpleBackground: {
         backgroundColor: 'black',
