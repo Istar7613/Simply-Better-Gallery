@@ -35,3 +35,14 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+node_modules/
+android/
+ios/
+.expo/
+.expo-shared/
+*.log
+*.tmp
+dist/
+build/
+.env
